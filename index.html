@@ -1,0 +1,1557 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>প্রবাস EU | এক প্ল্যাটফর্মে চাকরি • বাসা • শেয়ারিং • সার্ভিস</title>
+
+  <!-- Bangla-friendly font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #070A12;
+      --surface: rgba(255,255,255,.08);
+      --surface2: rgba(255,255,255,.06);
+      --surface3: rgba(0,0,0,.18);
+      --stroke: rgba(255,255,255,.12);
+
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --muted2: rgba(255,255,255,.52);
+      --placeholder: rgba(255,255,255,.45);
+
+      --accent: #7C5CFF;
+      --accent2:#00D1FF;
+      --good:#2EE59D;
+      --warn:#FFB020;
+      --bad:#FF4D6D;
+
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --shadow2: 0 10px 28px rgba(0,0,0,.35);
+
+      --radius2: 28px;
+
+      --bgGrad1: rgba(124,92,255,.25);
+      --bgGrad2: rgba(0,209,255,.22);
+      --bgGrad3: rgba(46,229,157,.16);
+
+      --blob1a: rgba(124,92,255,.95);
+      --blob1b: rgba(124,92,255,0);
+      --blob2a: rgba(0,209,255,.9);
+      --blob2b: rgba(0,209,255,0);
+      --blob3a: rgba(46,229,157,.85);
+      --blob3b: rgba(46,229,157,0);
+    }
+
+    html[data-theme="light"]{
+      --bg: #F6F7FB;
+      --surface: rgba(0,0,0,.04);
+      --surface2: rgba(0,0,0,.03);
+      --surface3: rgba(255,255,255,.75);
+      --stroke: rgba(0,0,0,.10);
+
+      --text: rgba(10,12,18,.92);
+      --muted: rgba(10,12,18,.66);
+      --muted2: rgba(10,12,18,.50);
+      --placeholder: rgba(10,12,18,.40);
+
+      --shadow: 0 18px 60px rgba(10,12,18,.12);
+      --shadow2: 0 10px 28px rgba(10,12,18,.10);
+
+      --bgGrad1: rgba(124,92,255,.14);
+      --bgGrad2: rgba(0,209,255,.12);
+      --bgGrad3: rgba(46,229,157,.10);
+
+      --blob1a: rgba(124,92,255,.55);
+      --blob1b: rgba(124,92,255,0);
+      --blob2a: rgba(0,209,255,.50);
+      --blob2b: rgba(0,209,255,0);
+      --blob3a: rgba(46,229,157,.45);
+      --blob3b: rgba(46,229,157,0);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: "Noto Sans Bengali", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 800px at 20% -10%, var(--bgGrad1), transparent 60%),
+        radial-gradient(900px 700px at 90% 10%, var(--bgGrad2), transparent 55%),
+        radial-gradient(1000px 900px at 40% 110%, var(--bgGrad3), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      overflow-x:hidden;
+      transition: background-color .2s ease, color .2s ease;
+    }
+
+    .blob{
+      position: fixed;
+      width: 520px;
+      height: 520px;
+      border-radius: 999px;
+      filter: blur(55px);
+      opacity: .35;
+      z-index: -1;
+      transform: translate3d(0,0,0);
+      animation: floaty 12s ease-in-out infinite;
+      pointer-events:none;
+    }
+    .blob.b1{ left:-180px; top:-140px; background: radial-gradient(circle at 30% 30%, var(--blob1a), var(--blob1b)); }
+    .blob.b2{ right:-220px; top:40px;  background: radial-gradient(circle at 40% 30%, var(--blob2a), var(--blob2b)); animation-duration: 15s; }
+    .blob.b3{ left:20%; bottom:-220px; background: radial-gradient(circle at 40% 40%, var(--blob3a), var(--blob3b)); animation-duration: 18s; }
+
+    @keyframes floaty{
+      0%{ transform: translate(0,0) scale(1); }
+      50%{ transform: translate(30px, -18px) scale(1.04); }
+      100%{ transform: translate(0,0) scale(1); }
+    }
+
+    .app{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 16px 120px;
+    }
+
+    .topbar{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 14px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border-radius: 28px;
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 12px;
+      z-index: 5;
+    }
+    html[data-theme="light"] .topbar{
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65));
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 240px;
+      flex: 1 1 auto;
+    }
+    .logo{
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(124,92,255,1), rgba(0,209,255,1));
+      box-shadow: 0 10px 26px rgba(124,92,255,.18);
+      display:grid;
+      place-items:center;
+      border: 1px solid rgba(255,255,255,.20);
+      flex:0 0 auto;
+    }
+    .logo svg{ opacity:.95 }
+    .brand h1{
+      font-size: 16px;
+      margin: 0;
+      line-height: 1.1;
+      letter-spacing:.2px;
+    }
+    .brand small{
+      display:block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--stroke);
+      color: var(--text);
+      background: var(--surface);
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight: 800;
+      font-size: 13px;
+      user-select:none;
+      white-space: nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18); }
+    html[data-theme="light"] .btn:hover{ background: rgba(0,0,0,.05); border-color: rgba(0,0,0,.14); }
+
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(0,209,255,.8));
+      border-color: rgba(255,255,255,.22);
+      color: rgba(255,255,255,.95);
+    }
+    .btn.primary:hover{ background: linear-gradient(135deg, rgba(124,92,255,1), rgba(0,209,255,.95)); }
+    .btn svg{ width: 16px; height:16px; opacity:.9; }
+
+    /* HERO now single column (side card removed) */
+    .hero{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .heroCard{
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow:hidden;
+    }
+    html[data-theme="light"] .heroCard{
+      background: linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,255,255,.62));
+    }
+
+    .heroCard:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(800px 220px at 20% 0%, rgba(124,92,255,.16), transparent 60%),
+                  radial-gradient(700px 240px at 95% 10%, rgba(0,209,255,.12), transparent 55%);
+      pointer-events:none;
+    }
+    .heroInner{ position: relative; z-index:1; }
+
+    .heroTitle{
+      margin:0;
+      font-size: 26px;
+      line-height:1.25;
+      letter-spacing:.2px;
+    }
+    .heroSub{
+      margin: 10px 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height:1.6;
+      max-width: 62ch;
+    }
+
+    .searchRow{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .search{
+      flex: 1 1 320px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: var(--surface3);
+      backdrop-filter: blur(10px);
+      min-width: min(520px, 100%);
+    }
+    .search input{
+      width:100%;
+      border:none;
+      outline:none;
+      background: transparent;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .search input::placeholder{ color: var(--placeholder); }
+
+    .chipRow{
+      margin-top: 14px;
+      display:flex;
+      flex-wrap: wrap;
+      gap:8px;
+    }
+    .chip{
+      padding: 9px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 12.5px;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease;
+      user-select:none;
+    }
+    .chip:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); }
+    html[data-theme="light"] .chip:hover{ background: rgba(0,0,0,.05); }
+    .chip.active{
+      color: var(--text);
+      background: linear-gradient(135deg, rgba(124,92,255,.22), rgba(0,209,255,.12));
+      border-color: rgba(255,255,255,.20);
+    }
+    html[data-theme="light"] .chip.active{ border-color: rgba(0,0,0,.10); }
+
+    .sectionTitle{
+      margin: 22px 6px 10px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap: wrap;
+    }
+    .sectionTitle h2{
+      margin:0;
+      font-size: 16px;
+      letter-spacing:.2px;
+    }
+    .sectionTitle p{
+      margin:0;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+    .hint{ color: var(--muted); font-size: 12.5px; }
+
+    .catGrid{
+      display:grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+    }
+    .cat{
+      border: 1px solid var(--stroke);
+      background: var(--surface);
+      border-radius: 22px;
+      padding: 14px 12px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+      position:relative;
+      overflow:hidden;
+    }
+    .cat:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.09);
+      border-color: rgba(255,255,255,.18);
+    }
+    html[data-theme="light"] .cat:hover{
+      background: rgba(0,0,0,.05);
+      border-color: rgba(0,0,0,.14);
+    }
+    .catIcon{
+      width:40px;height:40px;border-radius: 16px;
+      background: linear-gradient(135deg, rgba(124,92,255,.38), rgba(0,209,255,.18));
+      border: 1px solid rgba(255,255,255,.15);
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+    }
+    html[data-theme="light"] .catIcon{ border-color: rgba(0,0,0,.10); }
+    .catText b{ display:block; font-size: 13.5px; }
+    .catText span{ display:block; font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+
+    .bar{
+      display:flex;
+      gap:12px;
+      flex-wrap: wrap;
+      align-items:flex-start;
+      justify-content:space-between;
+      margin: 14px 0 8px;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: var(--surface2);
+      backdrop-filter: blur(10px);
+    }
+    html[data-theme="light"] .bar{ background: rgba(255,255,255,.68); }
+    .barLeft{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      flex-wrap: wrap;
+      width: 100%;
+      flex: 1 1 auto;
+    }
+
+    .sliderBlock{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      min-width: 220px;
+      flex: 1 1 220px;
+    }
+    .sliderLabel{
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 900;
+      letter-spacing:.2px;
+      padding-left: 2px;
+    }
+
+    .pillRail{
+      display:flex;
+      gap:8px;
+      padding: 8px;
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: rgba(0,0,0,.14);
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    html[data-theme="light"] .pillRail{ background: rgba(0,0,0,.04); }
+    .pillRail::-webkit-scrollbar{ display:none; }
+
+    .pillBtn{
+      white-space: nowrap;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: var(--surface);
+      color: var(--muted);
+      font-weight: 900;
+      font-size: 12.5px;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+    }
+    html[data-theme="light"] .pillBtn{ border-color: rgba(0,0,0,.10); }
+    .pillBtn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); }
+    html[data-theme="light"] .pillBtn:hover{ background: rgba(0,0,0,.05); }
+    .pillBtn.active{
+      color: var(--text);
+      background: linear-gradient(135deg, rgba(124,92,255,.22), rgba(0,209,255,.12));
+      border-color: rgba(255,255,255,.22);
+    }
+    html[data-theme="light"] .pillBtn.active{ border-color: rgba(0,0,0,.12); }
+
+    .seg{
+      position:relative;
+      display:flex;
+      gap: 6px;
+      padding: 6px;
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: rgba(0,0,0,.14);
+      overflow:hidden;
+      width: 100%;
+      min-width: 0;
+    }
+    html[data-theme="light"] .seg{ background: rgba(0,0,0,.04); }
+
+    .segBtn{
+      flex:1;
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      cursor:pointer;
+      font-weight: 900;
+      font-size: 12.5px;
+      position:relative;
+      z-index:2;
+      min-width: 0;
+    }
+    .segBtn:hover{ color: var(--text); }
+    .segBtn.active{ color: var(--text); }
+
+    .segIndicator{
+      position:absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 6px;
+      width: calc((100% - 12px - 12px)/3);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(124,92,255,.22), rgba(0,209,255,.10));
+      border: 1px solid rgba(255,255,255,.14);
+      transition: transform .18s ease;
+      z-index:1;
+    }
+    html[data-theme="light"] .segIndicator{ border-color: rgba(0,0,0,.10); }
+
+    .toggle{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 6px;
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: rgba(0,0,0,.14);
+      cursor:pointer;
+      user-select:none;
+      width: 100%;
+    }
+    html[data-theme="light"] .toggle{ background: rgba(0,0,0,.04); }
+
+    .toggleKnob{
+      position:absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 6px;
+      width: calc((100% - 12px - 6px)/2);
+      border-radius: 14px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.14);
+      transition: transform .18s ease, background .18s ease;
+      z-index:1;
+    }
+    html[data-theme="light"] .toggleKnob{
+      background: rgba(255,255,255,.70);
+      border-color: rgba(0,0,0,.10);
+    }
+    .toggle.on .toggleKnob{
+      transform: translateX(100%);
+      background: rgba(46,229,157,.10);
+      border-color: rgba(46,229,157,.28);
+    }
+
+    .tOpt{
+      flex:1;
+      text-align:center;
+      font-weight: 900;
+      font-size: 12.5px;
+      color: var(--muted);
+      padding: 10px 8px;
+      position:relative;
+      z-index:2;
+      min-width: 0;
+    }
+    .toggle.on .tOpt[data-ver="yes"]{ color: var(--text); }
+    .toggle:not(.on) .tOpt[data-ver="all"]{ color: var(--text); }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .card{
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      border-radius: 28px;
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      cursor:pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      min-height: 170px;
+      position:relative;
+    }
+    html[data-theme="light"] .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.68));
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.18);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+    }
+    html[data-theme="light"] .card:hover{
+      border-color: rgba(0,0,0,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74));
+    }
+
+    .banner{
+      height: 52px;
+      background: radial-gradient(240px 80px at 15% 30%, rgba(124,92,255,.55), transparent 65%),
+                  radial-gradient(240px 90px at 85% 30%, rgba(0,209,255,.45), transparent 60%),
+                  rgba(0,0,0,.10);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    html[data-theme="light"] .banner{
+      border-bottom-color: rgba(0,0,0,.08);
+      background: radial-gradient(240px 80px at 15% 30%, rgba(124,92,255,.28), transparent 65%),
+                  radial-gradient(240px 90px at 85% 30%, rgba(0,209,255,.22), transparent 60%),
+                  rgba(0,0,0,.03);
+    }
+
+    .content{
+      padding: 14px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .titleRow{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:space-between;
+    }
+    .titleRow h3{
+      margin:0;
+      font-size: 14.5px;
+      line-height:1.35;
+    }
+
+    .fav{
+      width: 34px; height: 34px;
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      background: var(--surface);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      flex:0 0 auto;
+    }
+    .fav.active{
+      background: rgba(255,77,109,.16);
+      border-color: rgba(255,77,109,.35);
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items:center;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .badge{
+      padding: 7px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: var(--surface);
+      color: rgba(255,255,255,.82);
+      font-size: 12px;
+      display:inline-flex;
+      gap:6px;
+      align-items:center;
+    }
+    html[data-theme="light"] .badge{
+      color: rgba(10,12,18,.82);
+      border-color: rgba(0,0,0,.10);
+      background: rgba(0,0,0,.03);
+    }
+
+    .badge.good{ border-color: rgba(46,229,157,.35); background: rgba(46,229,157,.10); }
+    .badge.warn{ border-color: rgba(255,176,32,.35); background: rgba(255,176,32,.10); }
+    .badge.bad{  border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.10); }
+
+    .price{
+      margin-top: 2px;
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .price b{ font-size: 16px; color: var(--text); }
+    .price span{ color: var(--muted2); font-size: 12.5px; }
+
+    .bottomNav{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 14px;
+      width: min(640px, calc(100% - 24px));
+      border-radius: 22px;
+      border: 1px solid var(--stroke);
+      background: rgba(0,0,0,.30);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      padding: 10px;
+      display:flex;
+      gap: 8px;
+      z-index: 20;
+    }
+    html[data-theme="light"] .bottomNav{ background: rgba(255,255,255,.75); }
+
+    .tab{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 18px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      cursor:pointer;
+      user-select:none;
+      transition: background .15s ease, color .15s ease, transform .15s ease, border-color .15s ease;
+      font-weight: 900;
+      font-size: 12.5px;
+      min-width: 0;
+    }
+    .tab:hover{ transform: translateY(-1px); }
+    .tab.active{
+      color: var(--text);
+      background: linear-gradient(135deg, rgba(124,92,255,.18), rgba(0,209,255,.10));
+      border-color: rgba(255,255,255,.14);
+    }
+    html[data-theme="light"] .tab.active{ border-color: rgba(0,0,0,.10); }
+    .tab svg{ width: 16px; height:16px; opacity:.92; flex:0 0 auto; }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      z-index: 50;
+    }
+    .overlay.show{ display:block; }
+
+    .drawer{
+      position: fixed;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: min(520px, 94vw);
+      background: linear-gradient(180deg, rgba(15,18,32,.88), rgba(10,12,22,.92));
+      border-left: 1px solid rgba(255,255,255,.12);
+      box-shadow: -20px 0 80px rgba(0,0,0,.55);
+      transform: translateX(105%);
+      transition: transform .22s ease;
+      z-index: 60;
+      display:flex;
+      flex-direction:column;
+      backdrop-filter: blur(14px);
+    }
+    html[data-theme="light"] .drawer{
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.80));
+      border-left-color: rgba(0,0,0,.10);
+      box-shadow: -20px 0 80px rgba(10,12,18,.16);
+    }
+    .drawer.show{ transform: translateX(0); }
+
+    .drawerHead{
+      padding: 14px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    html[data-theme="light"] .drawerHead{ border-bottom-color: rgba(0,0,0,.08); }
+    .drawerHead b{ font-size: 14px; }
+    .drawerBody{
+      padding: 14px;
+      overflow:auto;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+
+    .detailHero{
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.12);
+      overflow:hidden;
+      background: rgba(255,255,255,.04);
+    }
+    html[data-theme="light"] .detailHero{
+      border-color: rgba(0,0,0,.10);
+      background: rgba(0,0,0,.02);
+    }
+    .detailHero .banner{ height: 86px; }
+
+    .kv{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .desc{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 22px;
+      padding: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 13.5px;
+    }
+    html[data-theme="light"] .desc{
+      border-color: rgba(0,0,0,.10);
+      background: rgba(0,0,0,.02);
+    }
+
+    .ctaRow{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+    }
+    .ctaRow .btn{ flex: 1 1 180px; justify-content:center; }
+
+    .tiny{
+      color: var(--muted2);
+      font-size: 11.5px;
+      line-height:1.55;
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 96px;
+      background: rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.9);
+      padding: 10px 12px;
+      border-radius: 14px;
+      backdrop-filter: blur(12px);
+      display:none;
+      z-index: 80;
+      box-shadow: var(--shadow2);
+      font-size: 12.5px;
+      max-width: calc(100% - 32px);
+      text-align:center;
+    }
+    html[data-theme="light"] .toast{
+      background: rgba(255,255,255,.85);
+      border-color: rgba(0,0,0,.10);
+      color: rgba(10,12,18,.92);
+    }
+    .toast.show{ display:block; }
+
+    @media (max-width: 1100px){
+      .catGrid{ grid-template-columns: repeat(3, 1fr); }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 980px){
+      .topbar{
+        flex-wrap: wrap;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .heroTitle{ font-size: 22px; }
+      .search{ min-width: 100%; }
+      .sliderBlock{ flex: 1 1 260px; min-width: 260px; }
+    }
+    @media (max-width: 620px){
+      .catGrid{ grid-template-columns: repeat(2, 1fr); }
+      .grid{ grid-template-columns: 1fr; }
+      .heroCard{ padding: 14px; }
+      .app{ padding: 16px 12px 130px; }
+
+      .sliderBlock{ min-width: 100%; flex: 1 1 100%; }
+      .bar{ padding: 12px; }
+      .barLeft{ gap: 10px; }
+
+      .bottomNav{ padding: 8px; gap: 6px; }
+      .tab{ padding: 10px 10px; font-size: 12px; }
+      .tab span.label{ display:none; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .blob{ animation:none; }
+      .card,.btn,.chip,.tab,.cat{ transition:none; }
+      .segIndicator, .toggleKnob{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C7.2 2 3.4 5.6 3.1 10.3c-.2 3.4 1.7 6.4 4.8 7.8.5.2 1-.2 1-.7V16c0-.4-.3-.8-.7-.9-1.4-.3-2.5-1.6-2.5-3.2 0-1.7 1.2-3.1 2.8-3.3.5-.1.9-.5.9-1V6.9c0-.5-.5-.9-1-.7C8.7 6.7 7.6 8.2 7.6 10c0 2.1 1.4 3.9 3.3 4.4V22c0 .6.5 1 1 1s1-.4 1-1v-7.6c1.9-.5 3.3-2.3 3.3-4.4 0-1.8-1.1-3.3-2.8-3.8-.5-.2-1 .2-1 .7v.7c0 .5.3.9.8 1.1 1 .4 1.7 1.3 1.7 2.4 0 1.6-1.1 2.9-2.5 3.2-.4.1-.7.5-.7.9v3.4c0 .5.5.9 1 .7 3.1-1.4 5-4.4 4.8-7.8C20.6 5.6 16.8 2 12 2Z" fill="currentColor" style="opacity:.92"/>
+          </svg>
+        </div>
+        <div>
+          <h1>প্রবাস EU</h1>
+          <small>চাকরি • বাসা • শেয়ারিং • সার্ভিস — এক প্ল্যাটফর্মে</small>
+        </div>
+      </div>
+      <!-- Actions removed as requested -->
+    </header>
+
+    <section class="hero">
+      <div class="heroCard">
+        <div class="heroInner">
+          <h2 class="heroTitle">ইউরোপে থাকা বাংলাদেশিদের জন্য <span style="color:var(--text)">স্মার্ট কমিউনিটি মার্কেটপ্লেস</span></h2>
+          <p class="heroSub">
+            এক জায়গায় খুঁজুন চাকরি, বাসা ভাড়া, শেয়ারিং রুম, সার্ভিস—সবকিছু।
+            <span style="color:var(--text);opacity:.9">Bangla-first UI</span> যাতে সবাই সহজে ব্যবহার করতে পারে।
+          </p>
+
+          <div class="searchRow">
+            <div class="search">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" style="width:18px;height:18px;opacity:.85">
+                <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10.8 18.2a7.4 7.4 0 1 0 0-14.8 7.4 7.4 0 0 0 0 14.8Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <input id="q" placeholder="যেমন: প্যারিস শেয়ার রুম, বার্লিন কিচেন হেলপার..." autocomplete="off" />
+            </div>
+
+            <button class="btn" id="btnNear" type="button">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s7-5.2 7-12a7 7 0 0 0-14 0c0 6.8 7 12 7 12Z" stroke="currentColor" stroke-width="2"/><path d="M12 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="currentColor" stroke-width="2"/></svg>
+              কাছাকাছি
+            </button>
+
+            <button class="btn" id="btnReset" type="button">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 4v5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              রিসেট
+            </button>
+          </div>
+
+          <div class="chipRow" id="quickChips"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sectionTitle">
+      <div>
+        <h2>ক্যাটাগরি</h2>
+        <p>এক ট্যাপে ফিল্টার—যা দরকার দ্রুত খুঁজুন</p>
+      </div>
+      <p class="hint">টিপ: “শেয়ারিং বাসা” ক্লিক করে দেখুন</p>
+    </div>
+
+    <section class="catGrid" id="catGrid"></section>
+
+    <div class="sectionTitle">
+      <div>
+        <h2 id="listTitle">সাম্প্রতিক পোস্ট</h2>
+        <p id="listSubtitle">আপনার সার্চ/ফিল্টার অনুযায়ী লিস্টিং দেখাচ্ছে</p>
+      </div>
+      <p class="hint" id="resultCount">—</p>
+    </div>
+
+    <div class="bar">
+      <div class="barLeft">
+        <div class="sliderBlock">
+          <div class="sliderLabel">দেশ</div>
+          <div class="pillRail" id="countryRail" aria-label="দেশ নির্বাচন"></div>
+        </div>
+
+        <div class="sliderBlock">
+          <div class="sliderLabel">সোর্ট</div>
+          <div class="seg" id="sortSeg" role="tablist" aria-label="সোর্ট নির্বাচন">
+            <div class="segIndicator" id="sortIndicator"></div>
+            <button class="segBtn" data-sort="new" role="tab" aria-selected="true" type="button">নতুন আগে</button>
+            <button class="segBtn" data-sort="price_low" role="tab" aria-selected="false" type="button">দাম কম</button>
+            <button class="segBtn" data-sort="price_high" role="tab" aria-selected="false" type="button">দাম বেশি</button>
+          </div>
+        </div>
+
+        <div class="sliderBlock">
+          <div class="sliderLabel">ভেরিফাইড</div>
+          <div class="toggle" id="verToggle" role="switch" aria-checked="false" tabindex="0">
+            <div class="toggleKnob" id="verKnob"></div>
+            <span class="tOpt" data-ver="all">সব</span>
+            <span class="tOpt" data-ver="yes">শুধু ভেরিফাইড</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hint">ডেমো ডেটা • ক্লিক করে ডিটেইল দেখুন</div>
+    </div>
+
+    <section class="grid" id="grid"></section>
+  </div>
+
+  <nav class="bottomNav" aria-label="Bottom navigation">
+    <div class="tab active" data-tab="home">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      <span class="label">হোম</span>
+    </div>
+    <div class="tab" data-tab="search">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.8 18.2a7.4 7.4 0 1 0 0-14.8 7.4 7.4 0 0 0 0 14.8Z" stroke="currentColor" stroke-width="2"/></svg>
+      <span class="label">সার্চ</span>
+    </div>
+    <div class="tab" data-tab="help">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10Z" stroke="currentColor" stroke-width="2"/><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.2c-.9.5-1.6 1.2-1.6 2.3V14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 17h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      <span class="label">হেল্প</span>
+    </div>
+  </nav>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer" aria-label="Details drawer" role="dialog" aria-modal="true">
+    <div class="drawerHead">
+      <b id="drawerTitle">ডিটেইল</b>
+      <button class="btn" id="btnClose" type="button">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        বন্ধ
+      </button>
+    </div>
+    <div class="drawerBody" id="drawerBody"></div>
+  </aside>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // =========================================================
+    // THEME (Dark/Light)
+    // =========================================================
+    const THEME_KEY = "prabash_theme";
+
+    function applyTheme(mode){
+      const root = document.documentElement;
+
+      if(mode === "system"){
+        root.removeAttribute("data-theme");
+        const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+        root.setAttribute("data-theme", prefersLight ? "light" : "dark");
+        root.setAttribute("data-theme-mode", "system");
+      }else{
+        root.setAttribute("data-theme", mode);
+        root.setAttribute("data-theme-mode", mode);
+      }
+
+      const isLight = root.getAttribute("data-theme") === "light";
+      const icon = document.getElementById("themeIcon");
+      if(icon) icon.textContent = isLight ? "☀️" : "🌙";
+    }
+
+    function getInitialTheme(){
+      const saved = localStorage.getItem(THEME_KEY);
+      if(saved === "light" || saved === "dark" || saved === "system") return saved;
+      return "system";
+    }
+
+    function toggleTheme(){
+      const root = document.documentElement;
+      const current = root.getAttribute("data-theme") || "dark";
+      const next = (current === "light") ? "dark" : "light";
+      localStorage.setItem(THEME_KEY, next);
+      applyTheme(next);
+      toast(next === "light" ? "লাইট মোড" : "ডার্ক মোড");
+    }
+
+    const mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: light)") : null;
+    if(mq){
+      mq.addEventListener("change", ()=>{
+        const saved = localStorage.getItem(THEME_KEY) || "system";
+        if(saved === "system") applyTheme("system");
+      });
+    }
+
+    // ===== Demo Data =====
+    const CATEGORIES = [
+      { id:"job",     name:"চাকরি",          sub:"কিচেন • ওয়্যারহাউস • কেয়ার", icon:"💼" },
+      { id:"rent",    name:"বাসা ভাড়া",       sub:"ফ্ল্যাট • স্টুডিও • ফ্যামিলি", icon:"🏠" },
+      { id:"share",   name:"শেয়ারিং বাসা",    sub:"রুম • বেড • সাবলেট", icon:"🛏️" },
+      { id:"delivery",name:"ডেলিভারি",        sub:"রাইডার • শিফট • জোন", icon:"🛵" },
+      { id:"services",name:"সার্ভিস",        sub:"অনুবাদ • ডকুমেন্ট • ক্লিনিং", icon:"🧰" },
+    ];
+
+    const LISTINGS = [
+      { id:"L001", cat:"job", title:"বার্লিনে কিচেন হেলপার (ফুল-টাইম) — তাৎক্ষণিক জয়েন", country:"DE", city:"Berlin", price:0, priceText:"বেতন আলোচনা সাপেক্ষ", verified:true, freshness:"আজ", when:"2026-02-26", tags:["জার্মানি","কিচেন","ফুল-টাইম"], badge:{type:"good", text:"ভেরিফাইড"}, desc:"রেস্টুরেন্ট কিচেন হেলপার প্রয়োজন। অভিজ্ঞতা থাকলে ভালো, না থাকলেও ট্রেনিং।" },
+      { id:"L002", cat:"share", title:"প্যারিসে শেয়ার রুম (২ জন) — মেট্রো কাছে", country:"FR", city:"Paris", price:320, priceText:"€320/মাস", verified:false, freshness:"গতকাল", when:"2026-02-25", tags:["ফ্রান্স","শেয়ারিং","মেট্রো"], badge:{type:"warn", text:"চেক করে নিন"}, desc:"পরিষ্কার-পরিচ্ছন্ন শেয়ার রুম। ইউটিলিটি আলাদা। ভিজিট করে নিন।" },
+      { id:"L003", cat:"rent", title:"মিলানে স্টুডিও ফ্ল্যাট ভাড়া — ১ জন/কাপল", country:"IT", city:"Milan", price:780, priceText:"€780/মাস", verified:true, freshness:"২ দিন আগে", when:"2026-02-24", tags:["ইতালি","স্টুডিও","সেন্ট্রাল"], badge:{type:"good", text:"ভেরিফাইড"}, desc:"স্টুডিও ফ্ল্যাট, কিচেনেট, ওয়াশিং সুবিধা। ডিপোজিট/কাগজপত্র লাগবে।" },
+      { id:"L005", cat:"services", title:"ডকুমেন্ট ট্রান্সলেশন (BN↔EN) + বুকিং সাহায্য", country:"NL", city:"Amsterdam", price:25, priceText:"€25 থেকে", verified:true, freshness:"এই সপ্তাহে", when:"2026-02-22", tags:["সার্ভিস","অনুবাদ","নেদারল্যান্ডস"], badge:{type:"good", text:"ভেরিফাইড"}, desc:"CV/কভার লেটার, ডকুমেন্ট অনুবাদ। প্রয়োজন হলে বুকিং গাইড।" },
+      { id:"L006", cat:"delivery", title:"মাদ্রিদে রাইডার লাগবে — পার্ট-টাইম শিফট", country:"ES", city:"Madrid", price:0, priceText:"ইনসেন্টিভ সহ", verified:false, freshness:"আজ", when:"2026-02-26", tags:["স্পেন","রাইডার","পার্ট-টাইম"], badge:{type:"warn", text:"ডিটেইল দেখুন"}, desc:"নিজস্ব বাইক/স্কুটার থাকলে সুবিধা। জোন অনুযায়ী শিফট।" },
+      { id:"L007", cat:"share", title:"স্টকহোমে বেড স্পেস (মেইল) — স্টেশন থেকে ৮ মিনিট", country:"SE", city:"Stockholm", price:240, priceText:"€240/মাস", verified:true, freshness:"৪ দিন আগে", when:"2026-02-22", tags:["সুইডেন","বেড স্পেস","মেইল"], badge:{type:"good", text:"ভেরিফাইড"}, desc:"সেফ এরিয়া, পরিষ্কার বাসা। রান্নাঘর ব্যবহার করা যাবে।" },
+      { id:"L008", cat:"job", title:"ওয়ারশ’ ওয়্যারহাউস পিকার/প্যাকার — নাইট শিফট", country:"PL", city:"Warsaw", price:0, priceText:"ঘণ্টা হিসেবে", verified:false, freshness:"৫ দিন আগে", when:"2026-02-21", tags:["পোল্যান্ড","ওয়ারহাউস","নাইট"], badge:{type:"warn", text:"ইন্টারভিউ লাগবে"}, desc:"ওয়ারহাউসে পিকার/প্যাকার কাজ। বেসিক ইংলিশ হলে ভালো।" },
+      { id:"L009", cat:"rent", title:"রটারড্যামে ২ বেডরুম ফ্যামিলি ফ্ল্যাট — স্কুল কাছে", country:"NL", city:"Rotterdam", price:1250, priceText:"€1250/মাস", verified:true, freshness:"১ সপ্তাহ আগে", when:"2026-02-19", tags:["নেদারল্যান্ডস","ফ্যামিলি","২ বেড"], badge:{type:"good", text:"ভেরিফাইড"}, desc:"পরিবারের জন্য উপযুক্ত। কন্ট্রাক্ট, ডিপোজিট, ইনকাম প্রুফ লাগতে পারে।" }
+    ];
+
+    const QUICK_CHIPS = [
+      { key:"cat", value:"job", label:"চাকরি" },
+      { key:"cat", value:"share", label:"শেয়ারিং রুম" },
+      { key:"cat", value:"rent", label:"বাসা ভাড়া" },
+      { key:"cat", value:"delivery", label:"রাইডার" },
+      { key:"verified", value:"yes", label:"শুধু ভেরিফাইড" },
+      { key:"country", value:"FR", label:"ফ্রান্স" },
+    ];
+
+    const state = {
+      q: "",
+      cat: "all",
+      country: "all",
+      sort: "new",
+      verified: "all",
+      fav: new Set(),
+      tab: "home"
+    };
+
+    const $ = (sel) => document.querySelector(sel);
+    const el = (tag, attrs={}, children=[]) => {
+      const n = document.createElement(tag);
+      Object.entries(attrs).forEach(([k,v]) => {
+        if(k === "class") n.className = v;
+        else if(k === "html") n.innerHTML = v;
+        else if(k.startsWith("on") && typeof v === "function") n.addEventListener(k.slice(2), v);
+        else n.setAttribute(k, v);
+      });
+      children.forEach(c => n.appendChild(typeof c === "string" ? document.createTextNode(c) : c));
+      return n;
+    };
+
+    function toast(msg){
+      const t = $("#toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(()=>t.classList.remove("show"), 1900);
+    }
+
+    function fmtCountry(code){
+      return ({DE:"জার্মানি", FR:"ফ্রান্স", IT:"ইতালি", ES:"স্পেন", NL:"নেদারল্যান্ডস", SE:"সুইডেন", PL:"পোল্যান্ড"})[code] || code;
+    }
+
+    function catName(id){
+      const c = CATEGORIES.find(x=>x.id===id);
+      return c ? c.name : "—";
+    }
+
+    function badgeClass(type){
+      if(type==="good") return "badge good";
+      if(type==="warn") return "badge warn";
+      if(type==="bad")  return "badge bad";
+      return "badge";
+    }
+
+    function renderCountryRail(){
+      const rail = $("#countryRail");
+      if(!rail) return;
+      rail.innerHTML = "";
+
+      const countries = [
+        { code:"all", label:"সব" },
+        { code:"DE", label:"জার্মানি" },
+        { code:"FR", label:"ফ্রান্স" },
+        { code:"IT", label:"ইতালি" },
+        { code:"ES", label:"স্পেন" },
+        { code:"NL", label:"নেদারল্যান্ডস" },
+        { code:"SE", label:"সুইডেন" },
+        { code:"PL", label:"পোল্যান্ড" }
+      ];
+
+      countries.forEach(c=>{
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "pillBtn" + (state.country === c.code ? " active" : "");
+        b.textContent = c.label;
+        b.addEventListener("click", ()=>{
+          state.country = c.code;
+          renderCountryRail();
+          renderAll();
+          toast(`দেশ: ${c.label}`);
+        });
+        rail.appendChild(b);
+      });
+    }
+
+    function setSortUI(value){
+      const seg = $("#sortSeg");
+      const indicator = $("#sortIndicator");
+      if(!seg || !indicator) return;
+
+      const btns = [...seg.querySelectorAll(".segBtn")];
+      btns.forEach((b)=>{
+        const active = b.dataset.sort === value;
+        b.classList.toggle("active", active);
+        b.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      const idx = Math.max(0, btns.findIndex(b=>b.dataset.sort===value));
+      indicator.style.transform = `translateX(${idx * 100}%)`;
+    }
+
+    function bindSortSeg(){
+      const seg = $("#sortSeg");
+      if(!seg) return;
+      seg.addEventListener("click", (e)=>{
+        const btn = e.target.closest(".segBtn");
+        if(!btn) return;
+        state.sort = btn.dataset.sort;
+        setSortUI(state.sort);
+        renderAll();
+      });
+      setSortUI(state.sort);
+    }
+
+    function setVerifiedUI(){
+      const t = $("#verToggle");
+      if(!t) return;
+      const on = state.verified === "yes";
+      t.classList.toggle("on", on);
+      t.setAttribute("aria-checked", on ? "true" : "false");
+    }
+
+    function bindVerifiedToggle(){
+      const t = $("#verToggle");
+      if(!t) return;
+
+      const toggleIt = ()=>{
+        state.verified = (state.verified === "yes") ? "all" : "yes";
+        setVerifiedUI();
+        renderAll();
+        toast(state.verified === "yes" ? "শুধু ভেরিফাইড" : "সব পোস্ট");
+      };
+
+      t.addEventListener("click", (e)=>{
+        const opt = e.target.closest(".tOpt");
+        if(opt){
+          state.verified = opt.dataset.ver;
+          setVerifiedUI();
+          renderAll();
+          toast(state.verified === "yes" ? "শুধু ভেরিফাইড" : "সব পোস্ট");
+          return;
+        }
+        toggleIt();
+      });
+
+      t.addEventListener("keydown", (e)=>{
+        if(e.key === "Enter" || e.key === " "){
+          e.preventDefault();
+          toggleIt();
+        }
+      });
+
+      setVerifiedUI();
+    }
+
+    function renderCategories(){
+      const root = $("#catGrid");
+      root.innerHTML = "";
+
+      const allCat = el("div",{class:"cat", role:"button", tabindex:"0"},[
+        el("div",{class:"catIcon", html:"✨"}),
+        el("div",{class:"catText"},[
+          el("b",{},["সব ক্যাটাগরি"]),
+          el("span",{},["সবকিছু একসাথে"])
+        ])
+      ]);
+      allCat.addEventListener("click", ()=>{ state.cat="all"; syncChips(); renderAll(); toast("সব ক্যাটাগরি"); });
+      root.appendChild(allCat);
+
+      CATEGORIES.forEach(c=>{
+        const node = el("div",{class:"cat", role:"button", tabindex:"0"},[
+          el("div",{class:"catIcon", html:c.icon}),
+          el("div",{class:"catText"},[
+            el("b",{},[c.name]),
+            el("span",{},[c.sub])
+          ])
+        ]);
+        node.addEventListener("click", ()=>{
+          state.cat = c.id;
+          syncChips();
+          renderAll();
+          toast(`${c.name} ফিল্টার`);
+        });
+        root.appendChild(node);
+      });
+    }
+
+    function renderQuickChips(){
+      const root = $("#quickChips");
+      root.innerHTML = "";
+      QUICK_CHIPS.forEach(ch=>{
+        const node = el("div",{class:"chip", role:"button", tabindex:"0"},[ch.label]);
+        node.addEventListener("click", ()=>{
+          if(ch.key==="cat") state.cat = ch.value;
+          if(ch.key==="country") state.country = ch.value;
+          if(ch.key==="verified") state.verified = ch.value;
+          syncChips();
+          renderAll();
+        });
+        root.appendChild(node);
+      });
+      syncChips();
+    }
+
+    function syncChips(){
+      const chips = [...document.querySelectorAll("#quickChips .chip")];
+      chips.forEach((node, i)=>{
+        const ch = QUICK_CHIPS[i];
+        let on = false;
+        if(ch.key==="cat" && state.cat===ch.value) on = true;
+        if(ch.key==="country" && state.country===ch.value) on = true;
+        if(ch.key==="verified" && state.verified===ch.value) on = true;
+        node.classList.toggle("active", on);
+      });
+    }
+
+    function getFiltered(){
+      const q = state.q.trim().toLowerCase();
+      let rows = LISTINGS.slice();
+
+      if(state.cat !== "all") rows = rows.filter(r => r.cat === state.cat);
+      if(state.country !== "all") rows = rows.filter(r => r.country === state.country);
+      if(state.verified === "yes") rows = rows.filter(r => r.verified);
+
+      if(q){
+        rows = rows.filter(r=>{
+          const hay = (r.title + " " + r.city + " " + fmtCountry(r.country) + " " + r.tags.join(" ")).toLowerCase();
+          return hay.includes(q);
+        });
+      }
+
+      if(state.sort === "new") rows.sort((a,b)=> (b.when||"").localeCompare(a.when||""));
+      else if(state.sort === "price_low") rows.sort((a,b)=> (a.price??0) - (b.price??0));
+      else if(state.sort === "price_high") rows.sort((a,b)=> (b.price??0) - (a.price??0));
+
+      return rows;
+    }
+
+    function renderGrid(){
+      const root = $("#grid");
+      root.innerHTML = "";
+
+      if(state.tab === "help"){
+        root.appendChild(renderHelpCard());
+        return;
+      }
+
+      const rows = getFiltered();
+      const rc = $("#resultCount");
+      if(rc) rc.textContent = `ফলাফল: ${rows.length}`;
+
+      if(rows.length === 0){
+        root.appendChild(el("div",{class:"desc"},[
+          "কোনো ফলাফল পাওয়া যায়নি। সার্চ শব্দ পরিবর্তন করুন বা ফিল্টার রিসেট করুন।"
+        ]));
+        return;
+      }
+
+      rows.forEach(r=>{
+        const favBtn = el("div",{class:"fav", title:"ফেভারিট (লোকাল)"},[
+          el("span",{html:"★", style:"opacity:.9; font-size:14px;"})
+        ]);
+        favBtn.classList.toggle("active", state.fav.has(r.id));
+        favBtn.addEventListener("click", (e)=>{
+          e.stopPropagation();
+          toggleFav(r.id);
+        });
+
+        const card = el("article",{class:"card", role:"button", tabindex:"0"},[
+          el("div",{class:"banner"}),
+          el("div",{class:"content"},[
+            el("div",{class:"titleRow"},[
+              el("div",{},[
+                el("h3",{},[r.title]),
+                el("div",{class:"meta"},[
+                  el("span",{},[`📍 ${r.city}, ${fmtCountry(r.country)}`]),
+                  el("span",{},[`⏱️ ${r.freshness}`])
+                ])
+              ]),
+              favBtn
+            ]),
+            el("div",{class:"meta"},[
+              el("span",{class: badgeClass(r.badge?.type)},[
+                el("span",{style:"opacity:.95"},[r.badge?.type==="good"?"✅":r.badge?.type==="bad"?"⚠️":"ℹ️"]),
+                r.badge?.text || "নোট"
+              ]),
+              el("span",{class:"badge"},[`📌 ${catName(r.cat)}`]),
+              ...r.tags.slice(0,2).map(t=>el("span",{class:"badge"},[t]))
+            ]),
+            el("div",{class:"price"},[
+              el("b",{},[r.priceText]),
+              el("span",{},["ডিটেইল দেখুন →"])
+            ])
+          ])
+        ]);
+
+        card.addEventListener("click", ()=> openDrawer(r.id));
+        root.appendChild(card);
+      });
+    }
+
+    // HELP CARD now contains: Mode button + Post button (post below mode)
+    function renderHelpCard(){
+      const wrap = el("div",{class:"heroCard"});
+      const inner = el("div",{class:"heroInner"},[
+        el("h3",{style:"margin:0 0 10px; font-size:18px;"},["হেল্প & সেফটি"]),
+
+        el("div",{class:"desc"},[
+          el("b",{style:"color:var(--text)"},["১) ভেরিফাইড ট্যাগ দেখুন: "]),
+          "যাদের তথ্য যাচাই করা—তাদের পোস্টে ✅ ভেরিফাইড ট্যাগ থাকবে।"
+        ]),
+        el("div",{class:"desc"},[
+          el("b",{style:"color:var(--text)"},["২) টাকা পাঠানোর আগে: "]),
+          "ভিডিও কল করুন, কাগজপত্র মিলিয়ে দেখুন, লোকেশন/ভিউইং করুন।"
+        ]),
+
+        // Mode + Post (Post below Mode)
+        el("div",{class:"ctaRow"},[
+          el("button",{class:"btn", id:"btnThemeHelp", type:"button", onclick:()=>toggleTheme()},[
+            el("span",{id:"themeIcon", html:"🌙"}), "মোড"
+          ]),
+          el("button",{class:"btn primary", id:"btnPostHelp", type:"button", onclick:()=>toast("ডেমো: পোস্টিং/লগইন নেই")},[
+            el("span",{html:"➕"}), "পোস্ট দিন"
+          ]),
+        ]),
+
+        el("div",{class:"ctaRow"},[
+          el("button",{class:"btn primary", type:"button", onclick:()=>{ state.tab="home"; syncTabs(); renderAll(); }},[
+            el("span",{html:"🏠"}),"হোম"
+          ]),
+          el("button",{class:"btn", type:"button", onclick:()=>toast("ডেমোতে রিপোর্ট ফিচার নেই")},[
+            el("span",{html:"🚩"}),"রিপোর্ট (ডেমো)"
+          ])
+        ]),
+
+        el("div",{class:"tiny"},[
+          "নোট: এটি শুধুমাত্র ভিউ-প্রোটোটাইপ। বাস্তব সাইটে লগইন/ভেরিফিকেশন/রিপোর্টিং যুক্ত হবে।"
+        ])
+      ]);
+      wrap.appendChild(inner);
+      return wrap;
+    }
+
+    function toggleFav(id){
+      if(state.fav.has(id)) state.fav.delete(id);
+      else state.fav.add(id);
+      renderGrid();
+      toast(state.fav.has(id) ? "ফেভারিটে যোগ হয়েছে" : "ফেভারিট থেকে সরানো হয়েছে");
+    }
+
+    function openDrawer(id){
+      const r = LISTINGS.find(x=>x.id===id);
+      if(!r) return;
+
+      $("#drawerTitle").textContent = "পোস্ট ডিটেইল";
+      const body = $("#drawerBody");
+      body.innerHTML = "";
+
+      const hero = el("div",{class:"detailHero"},[
+        el("div",{class:"banner"}),
+        el("div",{class:"content"},[
+          el("div",{style:"display:flex; align-items:flex-start; justify-content:space-between; gap:10px;"},[
+            el("div",{},[
+              el("h3",{style:"margin:0; font-size:16px; line-height:1.35"},[r.title]),
+              el("div",{class:"meta", style:"margin-top:8px;"},[
+                el("span",{},[`📍 ${r.city}, ${fmtCountry(r.country)}`]),
+                el("span",{},[`🗂️ ${catName(r.cat)}`]),
+                el("span",{},[`⏱️ ${r.freshness}`]),
+              ])
+            ]),
+            el("button",{class:"btn", type:"button", onclick:()=>toggleFav(r.id)},[
+              el("span",{html: state.fav.has(r.id) ? "★" : "☆"}), "ফেভারিট"
+            ])
+          ]),
+          el("div",{class:"meta"},[
+            el("span",{class: badgeClass(r.badge?.type)},[
+              el("span",{style:"opacity:.95"},[r.badge?.type==="good"?"✅":r.badge?.type==="bad"?"⚠️":"ℹ️"]),
+              r.badge?.text || "নোট"
+            ]),
+            ...r.tags.map(t=>el("span",{class:"badge"},[t]))
+          ]),
+          el("div",{class:"price"},[
+            el("b",{},[r.priceText]),
+            el("span",{},[r.verified ? "ভেরিফাইড পোস্ট" : "ভেরিফাইড নয়"])
+          ])
+        ])
+      ]);
+
+      const kv = el("div",{class:"kv"},[
+        el("div",{class:"desc"},[ el("b",{style:"color:var(--text)"},["দেশ: "]), fmtCountry(r.country) ]),
+        el("div",{class:"desc"},[ el("b",{style:"color:var(--text)"},["সিটি: "]), r.city ]),
+        el("div",{class:"desc"},[ el("b",{style:"color:var(--text)"},["ক্যাটাগরি: "]), catName(r.cat) ]),
+        el("div",{class:"desc"},[ el("b",{style:"color:var(--text)"},["স্ট্যাটাস: "]), (r.verified ? "✅ ভেরিফাইড" : "ℹ️ সাধারণ") ]),
+      ]);
+
+      const desc = el("div",{class:"desc"},[
+        el("b",{style:"color:var(--text)"},["বিস্তারিত: "]),
+        r.desc
+      ]);
+
+      const cta = el("div",{class:"ctaRow"},[
+        el("button",{class:"btn primary", type:"button", onclick:()=>toast("ডেমোতে কল/চ্যাট যুক্ত নেই")},[ el("span",{html:"📞"}),"কল করুন (ডেমো)" ]),
+        el("button",{class:"btn", type:"button", onclick:()=>toast("ডেমোতে মেসেজ যুক্ত নেই")},[ el("span",{html:"💬"}),"মেসেজ (ডেমো)" ]),
+      ]);
+
+      const foot = el("div",{class:"tiny"},[
+        "সেফটি: আগে দেখা/ভেরিফাই করে তারপর ডিপোজিট/পেমেন্ট করুন।"
+      ]);
+
+      body.appendChild(hero);
+      body.appendChild(kv);
+      body.appendChild(desc);
+      body.appendChild(cta);
+      body.appendChild(foot);
+
+      $("#overlay").classList.add("show");
+      $("#drawer").classList.add("show");
+    }
+
+    function closeDrawer(){
+      $("#overlay").classList.remove("show");
+      $("#drawer").classList.remove("show");
+    }
+
+    function syncTabs(){
+      document.querySelectorAll(".tab").forEach(t=>{
+        t.classList.toggle("active", t.dataset.tab === state.tab);
+      });
+      if(state.tab === "search"){
+        $("#q").focus({preventScroll:true});
+        toast("সার্চ মোড");
+      }
+    }
+
+    function renderAll(){
+      if(state.tab === "help"){
+        $("#listTitle").textContent = "হেল্প & সেফটি";
+        $("#listSubtitle").textContent = "সেফ থাকার টিপস + কীভাবে ব্যবহার করবেন";
+      } else {
+        $("#listTitle").textContent = "সাম্প্রতিক পোস্ট";
+        $("#listSubtitle").textContent = "আপনার সার্চ/ফিল্টার অনুযায়ী লিস্টিং দেখাচ্ছে";
+      }
+
+      renderCountryRail();
+      setSortUI(state.sort);
+      setVerifiedUI();
+      renderGrid();
+      syncChips();
+
+      // ensure theme icon in help reflects current mode
+      const root = document.documentElement;
+      const isLight = root.getAttribute("data-theme") === "light";
+      const icon = document.getElementById("themeIcon");
+      if(icon) icon.textContent = isLight ? "☀️" : "🌙";
+    }
+
+    function init(){
+      const initial = getInitialTheme();
+      applyTheme(initial);
+
+      renderCategories();
+      renderQuickChips();
+      renderCountryRail();
+      bindSortSeg();
+      bindVerifiedToggle();
+
+      $("#q").addEventListener("input", (e)=>{
+        state.q = e.target.value;
+        renderAll();
+      });
+
+      $("#btnReset").addEventListener("click", ()=>{
+        state.q = "";
+        state.cat = "all";
+        state.country = "all";
+        state.sort = "new";
+        state.verified = "all";
+        state.tab = "home";
+        $("#q").value = "";
+        syncTabs();
+        renderAll();
+        toast("রিসেট সম্পন্ন");
+      });
+
+      $("#btnNear").addEventListener("click", ()=> toast("ডেমো: লোকেশন/ম্যাপ নেই"));
+
+      $("#overlay").addEventListener("click", closeDrawer);
+      $("#btnClose").addEventListener("click", closeDrawer);
+      window.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeDrawer(); });
+
+      document.querySelectorAll(".tab").forEach(t=>{
+        t.addEventListener("click", ()=>{
+          state.tab = t.dataset.tab;
+          syncTabs();
+          renderAll();
+        });
+      });
+
+      syncTabs();
+      renderAll();
+    }
+
+    init();
+  </script>
+</body>
+</html>
